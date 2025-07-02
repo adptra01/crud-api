@@ -68,7 +68,7 @@ This project uses Swagger UI for API documentation, powered by the `darkaonline/
 
 - API routes are defined in `routes/api.php` and include resources for `cars` and `orders`.
 
-- Authentication for API routes uses Laravel Sanctum.
+- Authentication for API routes uses Laravel Sanctum. ❌
 
 ## License
 
