@@ -12,7 +12,7 @@ class Order extends Model
     public $table = 'orders';
 
     public $fillable = [
-        'card_id',
+        'car_id',
         'order_date',
         'pickup_date',
         'dropoff_date',
@@ -21,7 +21,7 @@ class Order extends Model
     ];
 
     protected $casts = [
-        'card_id' => 'integer',
+        'car_id' => 'integer',
         'order_date' => 'date:Y-m-d',
         'pickup_date' => 'date:Y-m-d',
         'dropoff_date' => 'date:Y-m-d',
@@ -30,11 +30,11 @@ class Order extends Model
     ];
 
     public static array $rules = [
-        'card_id' => 'required,exists:cards,id,',
-        'order_date' => 'required, date',
-        'pickup_date' => 'required, date',
-        'dropoff_date' => 'required, date',
-        'pickup_location' => 'required, max:50, string',
-        'dropoff_location' => 'required, max:50, string',
+        'car_id' => 'required|exists:cars,id',
+        'order_date' => 'required|date',
+        'pickup_date' => 'required|date',
+        'dropoff_date' => 'required|date',
+        'pickup_location' => 'required|max:50|string',
+        'dropoff_location' => 'required|max:50|string',
     ];
 }

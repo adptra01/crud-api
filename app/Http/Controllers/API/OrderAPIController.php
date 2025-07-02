@@ -18,7 +18,7 @@ use Illuminate\Http\Request;
  *   description="An Order model",
  *
  *   @OA\Property(property="id", type="integer", example=1),
- *   @OA\Property(property="card_id", type="integer", example=42),
+ *   @OA\Property(property="car_id", type="integer", example=42),
  *   @OA\Property(property="order_date", type="string", format="date", example="2025-07-01"),
  *   @OA\Property(property="pickup_date", type="string", format="date", example="2025-07-05"),
  *   @OA\Property(property="dropoff_date", type="string", format="date", example="2025-07-10"),
@@ -38,18 +38,33 @@ class OrderAPIController extends AppBaseController
     /**
      * @OA\Get(
      *   path="/orders",
-     *   summary="getOrderList",
+     *   summary="List all orders",
      *   tags={"Order"},
-     *   description="Get all orders",
+     *   description="Retrieve a list of all orders with optional pagination parameters 'skip' and 'limit'.",
+     *
+     *   @OA\Parameter(
+     *       name="skip",
+     *       in="query",
+     *       description="Number of records to skip for pagination",
+     *       required=false,
+     *       @OA\Schema(type="integer", format="int32")
+     *   ),
+     *   @OA\Parameter(
+     *       name="limit",
+     *       in="query",
+     *       description="Maximum number of records to return",
+     *       required=false,
+     *       @OA\Schema(type="integer", format="int32")
+     *   ),
      *
      *   @OA\Response(
      *     response=200,
-     *     description="successful operation",
+     *     description="Successful operation",
      *
      *     @OA\JsonContent(
      *       type="object",
      *
-     *       @OA\Property(property="success", type="boolean"),
+     *       @OA\Property(property="success", type="boolean", example=true),
      *       @OA\Property(
      *         property="data",
      *         type="array",
@@ -57,7 +72,7 @@ class OrderAPIController extends AppBaseController
      *         @OA\Items(ref="#/components/schemas/Order")
      *       ),
      *
-     *       @OA\Property(property="message", type="string")
+     *       @OA\Property(property="message", type="string", example="Orders retrieved successfully")
      *     )
      *   )
      * )
@@ -76,26 +91,26 @@ class OrderAPIController extends AppBaseController
     /**
      * @OA\Post(
      *   path="/orders",
-     *   summary="createOrder",
+     *   summary="Create a new order",
      *   tags={"Order"},
-     *   description="Create Order",
+     *   description="Create a new order record with the provided data.",
      *
      *   @OA\RequestBody(
      *     required=true,
-     *
+     *     description="Order object that needs to be added",
      *     @OA\JsonContent(ref="#/components/schemas/Order")
      *   ),
      *
      *   @OA\Response(
      *     response=200,
-     *     description="successful operation",
+     *     description="Successful operation",
      *
      *     @OA\JsonContent(
      *       type="object",
      *
-     *       @OA\Property(property="success", type="boolean"),
+     *       @OA\Property(property="success", type="boolean", example=true),
      *       @OA\Property(property="data", ref="#/components/schemas/Order"),
-     *       @OA\Property(property="message", type="string")
+     *       @OA\Property(property="message", type="string", example="Order saved successfully")
      *     )
      *   )
      * )
@@ -112,24 +127,28 @@ class OrderAPIController extends AppBaseController
     /**
      * @OA\Get(
      *   path="/orders/{id}",
-     *   summary="getOrderItem",
+     *   summary="Get an order by ID",
      *   tags={"Order"},
-     *   description="Get Order by ID",
+     *   description="Retrieve a single order by its ID.",
      *
      *   @OA\Parameter(
-     *     name="id", in="path", required=true, @OA\Schema(type="integer")
+     *     name="id",
+     *     in="path",
+     *     required=true,
+     *     description="ID of the order to retrieve",
+     *     @OA\Schema(type="integer", format="int64")
      *   ),
      *
      *   @OA\Response(
      *     response=200,
-     *     description="successful operation",
+     *     description="Successful operation",
      *
      *     @OA\JsonContent(
      *       type="object",
      *
-     *       @OA\Property(property="success", type="boolean"),
+     *       @OA\Property(property="success", type="boolean", example=true),
      *       @OA\Property(property="data", ref="#/components/schemas/Order"),
-     *       @OA\Property(property="message", type="string")
+     *       @OA\Property(property="message", type="string", example="Order retrieved successfully")
      *     )
      *   )
      * )
@@ -149,30 +168,34 @@ class OrderAPIController extends AppBaseController
     /**
      * @OA\Put(
      *   path="/orders/{id}",
-     *   summary="updateOrder",
+     *   summary="Update an order by ID",
      *   tags={"Order"},
-     *   description="Update Order",
+     *   description="Update the details of an existing order by its ID.",
      *
      *   @OA\Parameter(
-     *     name="id", in="path", required=true, @OA\Schema(type="integer")
+     *     name="id",
+     *     in="path",
+     *     required=true,
+     *     description="ID of the order to update",
+     *     @OA\Schema(type="integer", format="int64")
      *   ),
      *
      *   @OA\RequestBody(
      *     required=true,
-     *
+     *     description="Order object with updated data",
      *     @OA\JsonContent(ref="#/components/schemas/Order")
      *   ),
      *
      *   @OA\Response(
      *     response=200,
-     *     description="successful operation",
+     *     description="Successful operation",
      *
      *     @OA\JsonContent(
      *       type="object",
      *
-     *       @OA\Property(property="success", type="boolean"),
+     *       @OA\Property(property="success", type="boolean", example=true),
      *       @OA\Property(property="data", ref="#/components/schemas/Order"),
-     *       @OA\Property(property="message", type="string")
+     *       @OA\Property(property="message", type="string", example="Order updated successfully")
      *     )
      *   )
      * )
@@ -196,24 +219,28 @@ class OrderAPIController extends AppBaseController
     /**
      * @OA\Delete(
      *   path="/orders/{id}",
-     *   summary="deleteOrder",
+     *   summary="Delete an order by ID",
      *   tags={"Order"},
-     *   description="Delete Order",
+     *   description="Delete an existing order by its ID.",
      *
      *   @OA\Parameter(
-     *     name="id", in="path", required=true, @OA\Schema(type="integer")
+     *     name="id",
+     *     in="path",
+     *     required=true,
+     *     description="ID of the order to delete",
+     *     @OA\Schema(type="integer", format="int64")
      *   ),
      *
      *   @OA\Response(
      *     response=200,
-     *     description="successful operation",
+     *     description="Successful operation",
      *
      *     @OA\JsonContent(
      *       type="object",
      *
-     *       @OA\Property(property="success", type="boolean"),
-     *       @OA\Property(property="data", type="string"),
-     *       @OA\Property(property="message", type="string")
+     *       @OA\Property(property="success", type="boolean", example=true),
+     *       @OA\Property(property="data", type="string", example="Order deleted successfully"),
+     *       @OA\Property(property="message", type="string", example="Order deleted successfully")
      *     )
      *   )
      * )

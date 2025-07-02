@@ -12,7 +12,7 @@
         "inView": false
     },
     {
-        "name": "card_id",
+        "name": "car_id",
         "dbType": "string",
         "htmlType": "50",
         "validations": "required, max:50, string",

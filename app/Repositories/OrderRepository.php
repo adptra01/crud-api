@@ -7,7 +7,7 @@ use App\Models\Order;
 class OrderRepository extends BaseRepository
 {
     protected $fieldSearchable = [
-        'card_id',
+        'car_id',
         'order_date',
         'pickup_date',
         'dropoff_date',

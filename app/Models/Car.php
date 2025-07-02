@@ -26,10 +26,10 @@ class Car extends Model
     ];
 
     public static array $rules = [
-        'car_name' => 'required, max:50, string',
-        'day_rate' => 'required, numeric, between:0,99999999.99999999',
-        'month_rate' => 'required, numeric, between:0,99999999.99999999 ',
-        'image' => 'required, image, max:2048',
+        'car_name' => 'required|max:50|string',
+        'day_rate' => 'required|numeric|between:0,99999999.99999999',
+        'month_rate' => 'required|numeric|between:0,99999999.99999999 ',
+        'image' => 'nullable|string|max:2048',
     ];
 
     public function orders()

@@ -15,18 +15,41 @@
                 "tags": [
                     "Car"
                 ],
-                "summary": "getCarList",
-                "description": "Get all cars",
+                "summary": "List all cars",
+                "description": "Retrieve a list of all cars with optional pagination parameters 'skip' and 'limit'.",
                 "operationId": "0e2bcb5c69987da3dec0ff8fea117020",
+                "parameters": [
+                    {
+                        "name": "skip",
+                        "in": "query",
+                        "description": "Number of records to skip for pagination",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Maximum number of records to return",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "successful operation",
+                        "description": "Successful operation",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "success": {
-                                            "type": "boolean"
+                                            "type": "boolean",
+                                            "example": true
                                         },
                                         "data": {
                                             "type": "array",
@@ -35,7 +58,8 @@
                                             }
                                         },
                                         "message": {
-                                            "type": "string"
+                                            "type": "string",
+                                            "example": "Cars retrieved successfully"
                                         }
                                     },
                                     "type": "object"
@@ -49,10 +73,11 @@
                 "tags": [
                     "Car"
                 ],
-                "summary": "createCar",
-                "description": "Create Car",
+                "summary": "Create a new car",
+                "description": "Create a new car record with the provided data.",
                 "operationId": "2c89002b55d9b5bb9a87b4ae1c0cc39e",
                 "requestBody": {
+                    "description": "Car object that needs to be added",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -64,19 +89,21 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "successful operation",
+                        "description": "Successful operation",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "success": {
-                                            "type": "boolean"
+                                            "type": "boolean",
+                                            "example": true
                                         },
                                         "data": {
                                             "$ref": "#/components/schemas/Car"
                                         },
                                         "message": {
-                                            "type": "string"
+                                            "type": "string",
+                                            "example": "Car saved successfully"
                                         }
                                     },
                                     "type": "object"
@@ -92,35 +119,38 @@
                 "tags": [
                     "Car"
                 ],
-                "summary": "getCarItem",
-                "description": "Get Car",
+                "summary": "Get a car by ID",
+                "description": "Retrieve a single car by its ID.",
                 "operationId": "97be050aefa7a40e66d5931d38ccea73",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "id of Car",
+                        "description": "ID of the car to retrieve",
                         "required": true,
                         "schema": {
-                            "type": "integer"
+                            "type": "integer",
+                            "format": "int64"
                         }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "successful operation",
+                        "description": "Successful operation",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "success": {
-                                            "type": "boolean"
+                                            "type": "boolean",
+                                            "example": true
                                         },
                                         "data": {
                                             "$ref": "#/components/schemas/Car"
                                         },
                                         "message": {
-                                            "type": "string"
+                                            "type": "string",
+                                            "example": "Car retrieved successfully"
                                         }
                                     },
                                     "type": "object"
@@ -134,21 +164,23 @@
                 "tags": [
                     "Car"
                 ],
-                "summary": "updateCar",
-                "description": "Update Car",
+                "summary": "Update a car by ID",
+                "description": "Update the details of an existing car by its ID.",
                 "operationId": "66367a6f94de5301eeb824456a448f95",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "id of Car",
+                        "description": "ID of the car to update",
                         "required": true,
                         "schema": {
-                            "type": "integer"
+                            "type": "integer",
+                            "format": "int64"
                         }
                     }
                 ],
                 "requestBody": {
+                    "description": "Car object with updated data",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -160,19 +192,21 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "successful operation",
+                        "description": "Successful operation",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "success": {
-                                            "type": "boolean"
+                                            "type": "boolean",
+                                            "example": true
                                         },
                                         "data": {
                                             "$ref": "#/components/schemas/Car"
                                         },
                                         "message": {
-                                            "type": "string"
+                                            "type": "string",
+                                            "example": "Car updated successfully"
                                         }
                                     },
                                     "type": "object"
@@ -186,35 +220,39 @@
                 "tags": [
                     "Car"
                 ],
-                "summary": "deleteCar",
-                "description": "Delete Car",
+                "summary": "Delete a car by ID",
+                "description": "Delete an existing car by its ID.",
                 "operationId": "ac6f0c58d20a6ccd0b1f4ae539f433bd",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "id of Car",
+                        "description": "ID of the car to delete",
                         "required": true,
                         "schema": {
-                            "type": "integer"
+                            "type": "integer",
+                            "format": "int64"
                         }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "successful operation",
+                        "description": "Successful operation",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "success": {
-                                            "type": "boolean"
+                                            "type": "boolean",
+                                            "example": true
                                         },
                                         "data": {
-                                            "type": "string"
+                                            "type": "string",
+                                            "example": "Car deleted successfully"
                                         },
                                         "message": {
-                                            "type": "string"
+                                            "type": "string",
+                                            "example": "Car deleted successfully"
                                         }
                                     },
                                     "type": "object"
@@ -230,18 +268,41 @@
                 "tags": [
                     "Order"
                 ],
-                "summary": "getOrderList",
-                "description": "Get all orders",
+                "summary": "List all orders",
+                "description": "Retrieve a list of all orders with optional pagination parameters 'skip' and 'limit'.",
                 "operationId": "fb21745d6840c15cfa15f1a5ac9f7089",
+                "parameters": [
+                    {
+                        "name": "skip",
+                        "in": "query",
+                        "description": "Number of records to skip for pagination",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Maximum number of records to return",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "successful operation",
+                        "description": "Successful operation",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "success": {
-                                            "type": "boolean"
+                                            "type": "boolean",
+                                            "example": true
                                         },
                                         "data": {
                                             "type": "array",
@@ -250,7 +311,8 @@
                                             }
                                         },
                                         "message": {
-                                            "type": "string"
+                                            "type": "string",
+                                            "example": "Orders retrieved successfully"
                                         }
                                     },
                                     "type": "object"
@@ -264,10 +326,11 @@
                 "tags": [
                     "Order"
                 ],
-                "summary": "createOrder",
-                "description": "Create Order",
+                "summary": "Create a new order",
+                "description": "Create a new order record with the provided data.",
                 "operationId": "8251788a6fc19fc50524a2dff59e801b",
                 "requestBody": {
+                    "description": "Order object that needs to be added",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -279,19 +342,21 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "successful operation",
+                        "description": "Successful operation",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "success": {
-                                            "type": "boolean"
+                                            "type": "boolean",
+                                            "example": true
                                         },
                                         "data": {
                                             "$ref": "#/components/schemas/Order"
                                         },
                                         "message": {
-                                            "type": "string"
+                                            "type": "string",
+                                            "example": "Order saved successfully"
                                         }
                                     },
                                     "type": "object"
@@ -307,34 +372,38 @@
                 "tags": [
                     "Order"
                 ],
-                "summary": "getOrderItem",
-                "description": "Get Order by ID",
+                "summary": "Get an order by ID",
+                "description": "Retrieve a single order by its ID.",
                 "operationId": "8e3ad4da49bf0c6d2dbc0132f4bbf245",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
+                        "description": "ID of the order to retrieve",
                         "required": true,
                         "schema": {
-                            "type": "integer"
+                            "type": "integer",
+                            "format": "int64"
                         }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "successful operation",
+                        "description": "Successful operation",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "success": {
-                                            "type": "boolean"
+                                            "type": "boolean",
+                                            "example": true
                                         },
                                         "data": {
                                             "$ref": "#/components/schemas/Order"
                                         },
                                         "message": {
-                                            "type": "string"
+                                            "type": "string",
+                                            "example": "Order retrieved successfully"
                                         }
                                     },
                                     "type": "object"
@@ -348,20 +417,23 @@
                 "tags": [
                     "Order"
                 ],
-                "summary": "updateOrder",
-                "description": "Update Order",
+                "summary": "Update an order by ID",
+                "description": "Update the details of an existing order by its ID.",
                 "operationId": "19c4661d9a7eef28174f9646481983d3",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
+                        "description": "ID of the order to update",
                         "required": true,
                         "schema": {
-                            "type": "integer"
+                            "type": "integer",
+                            "format": "int64"
                         }
                     }
                 ],
                 "requestBody": {
+                    "description": "Order object with updated data",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -373,19 +445,21 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "successful operation",
+                        "description": "Successful operation",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "success": {
-                                            "type": "boolean"
+                                            "type": "boolean",
+                                            "example": true
                                         },
                                         "data": {
                                             "$ref": "#/components/schemas/Order"
                                         },
                                         "message": {
-                                            "type": "string"
+                                            "type": "string",
+                                            "example": "Order updated successfully"
                                         }
                                     },
                                     "type": "object"
@@ -399,34 +473,39 @@
                 "tags": [
                     "Order"
                 ],
-                "summary": "deleteOrder",
-                "description": "Delete Order",
+                "summary": "Delete an order by ID",
+                "description": "Delete an existing order by its ID.",
                 "operationId": "fafc3aa6f4a00ca437632dfef32f2cde",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
+                        "description": "ID of the order to delete",
                         "required": true,
                         "schema": {
-                            "type": "integer"
+                            "type": "integer",
+                            "format": "int64"
                         }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "successful operation",
+                        "description": "Successful operation",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "success": {
-                                            "type": "boolean"
+                                            "type": "boolean",
+                                            "example": true
                                         },
                                         "data": {
-                                            "type": "string"
+                                            "type": "string",
+                                            "example": "Order deleted successfully"
                                         },
                                         "message": {
-                                            "type": "string"
+                                            "type": "string",
+                                            "example": "Order deleted successfully"
                                         }
                                     },
                                     "type": "object"
@@ -478,7 +557,7 @@
                         "type": "integer",
                         "example": 1
                     },
-                    "card_id": {
+                    "car_id": {
                         "type": "integer",
                         "example": 42
                     },

@@ -36,31 +36,47 @@ class CarAPIController extends AppBaseController
     /**
      * @OA\Get(
      *      path="/cars",
-     *      summary="getCarList",
+     *      summary="List all cars",
      *      tags={"Car"},
-     *      description="Get all cars",
+     *      description="Retrieve a list of all cars with optional pagination parameters 'skip' and 'limit'.",
+     *
+     *      @OA\Parameter(
+     *          name="skip",
+     *          in="query",
+     *          description="Number of records to skip for pagination",
+     *          required=false,
+     *          @OA\Schema(type="integer", format="int32")
+     *      ),
+     *      @OA\Parameter(
+     *          name="limit",
+     *          in="query",
+     *          description="Maximum number of records to return",
+     *          required=false,
+     *          @OA\Schema(type="integer", format="int32")
+     *      ),
      *
      *      @OA\Response(
      *          response=200,
-     *          description="successful operation",
+     *          description="Successful operation",
      *
      *          @OA\JsonContent(
      *              type="object",
      *
      *              @OA\Property(
      *                  property="success",
-     *                  type="boolean"
+     *                  type="boolean",
+     *                  example=true
      *              ),
      *              @OA\Property(
      *                  property="data",
      *                  type="array",
-     *
      *                  @OA\Items(ref="#/components/schemas/Car")
      *              ),
      *
      *              @OA\Property(
      *                  property="message",
-     *                  type="string"
+     *                  type="string",
+     *                  example="Cars retrieved successfully"
      *              )
      *          )
      *      )
@@ -80,26 +96,27 @@ class CarAPIController extends AppBaseController
     /**
      * @OA\Post(
      *      path="/cars",
-     *      summary="createCar",
+     *      summary="Create a new car",
      *      tags={"Car"},
-     *      description="Create Car",
+     *      description="Create a new car record with the provided data.",
      *
      *      @OA\RequestBody(
      *        required=true,
-     *
+     *        description="Car object that needs to be added",
      *        @OA\JsonContent(ref="#/components/schemas/Car")
      *      ),
      *
      *      @OA\Response(
      *          response=200,
-     *          description="successful operation",
+     *          description="Successful operation",
      *
      *          @OA\JsonContent(
      *              type="object",
      *
      *              @OA\Property(
      *                  property="success",
-     *                  type="boolean"
+     *                  type="boolean",
+     *                  example=true
      *              ),
      *              @OA\Property(
      *                  property="data",
@@ -107,7 +124,8 @@ class CarAPIController extends AppBaseController
      *              ),
      *              @OA\Property(
      *                  property="message",
-     *                  type="string"
+     *                  type="string",
+     *                  example="Car saved successfully"
      *              )
      *          )
      *      )
@@ -125,31 +143,29 @@ class CarAPIController extends AppBaseController
     /**
      * @OA\Get(
      *      path="/cars/{id}",
-     *      summary="getCarItem",
+     *      summary="Get a car by ID",
      *      tags={"Car"},
-     *      description="Get Car",
+     *      description="Retrieve a single car by its ID.",
      *
      *      @OA\Parameter(
      *          name="id",
-     *          description="id of Car",
-     *
-     *           @OA\Schema(
-     *             type="integer"
-     *          ),
+     *          description="ID of the car to retrieve",
      *          required=true,
-     *          in="path"
+     *          in="path",
+     *          @OA\Schema(type="integer", format="int64")
      *      ),
      *
      *      @OA\Response(
      *          response=200,
-     *          description="successful operation",
+     *          description="Successful operation",
      *
      *          @OA\JsonContent(
      *              type="object",
      *
      *              @OA\Property(
      *                  property="success",
-     *                  type="boolean"
+     *                  type="boolean",
+     *                  example=true
      *              ),
      *              @OA\Property(
      *                  property="data",
@@ -157,7 +173,8 @@ class CarAPIController extends AppBaseController
      *              ),
      *              @OA\Property(
      *                  property="message",
-     *                  type="string"
+     *                  type="string",
+     *                  example="Car retrieved successfully"
      *              )
      *          )
      *      )
@@ -178,37 +195,35 @@ class CarAPIController extends AppBaseController
     /**
      * @OA\Put(
      *      path="/cars/{id}",
-     *      summary="updateCar",
+     *      summary="Update a car by ID",
      *      tags={"Car"},
-     *      description="Update Car",
+     *      description="Update the details of an existing car by its ID.",
      *
      *      @OA\Parameter(
      *          name="id",
-     *          description="id of Car",
-     *
-     *           @OA\Schema(
-     *             type="integer"
-     *          ),
+     *          description="ID of the car to update",
      *          required=true,
-     *          in="path"
+     *          in="path",
+     *          @OA\Schema(type="integer", format="int64")
      *      ),
      *
      *      @OA\RequestBody(
      *        required=true,
-     *
+     *        description="Car object with updated data",
      *        @OA\JsonContent(ref="#/components/schemas/Car")
      *      ),
      *
      *      @OA\Response(
      *          response=200,
-     *          description="successful operation",
+     *          description="Successful operation",
      *
      *          @OA\JsonContent(
      *              type="object",
      *
      *              @OA\Property(
      *                  property="success",
-     *                  type="boolean"
+     *                  type="boolean",
+     *                  example=true
      *              ),
      *              @OA\Property(
      *                  property="data",
@@ -216,7 +231,8 @@ class CarAPIController extends AppBaseController
      *              ),
      *              @OA\Property(
      *                  property="message",
-     *                  type="string"
+     *                  type="string",
+     *                  example="Car updated successfully"
      *              )
      *          )
      *      )
@@ -241,39 +257,39 @@ class CarAPIController extends AppBaseController
     /**
      * @OA\Delete(
      *      path="/cars/{id}",
-     *      summary="deleteCar",
+     *      summary="Delete a car by ID",
      *      tags={"Car"},
-     *      description="Delete Car",
+     *      description="Delete an existing car by its ID.",
      *
      *      @OA\Parameter(
      *          name="id",
-     *          description="id of Car",
-     *
-     *           @OA\Schema(
-     *             type="integer"
-     *          ),
+     *          description="ID of the car to delete",
      *          required=true,
-     *          in="path"
+     *          in="path",
+     *          @OA\Schema(type="integer", format="int64")
      *      ),
      *
      *      @OA\Response(
      *          response=200,
-     *          description="successful operation",
+     *          description="Successful operation",
      *
      *          @OA\JsonContent(
      *              type="object",
      *
      *              @OA\Property(
      *                  property="success",
-     *                  type="boolean"
+     *                  type="boolean",
+     *                  example=true
      *              ),
      *              @OA\Property(
      *                  property="data",
-     *                  type="string"
+     *                  type="string",
+     *                  example="Car deleted successfully"
      *              ),
      *              @OA\Property(
      *                  property="message",
-     *                  type="string"
+     *                  type="string",
+     *                  example="Car deleted successfully"
      *              )
      *          )
      *      )

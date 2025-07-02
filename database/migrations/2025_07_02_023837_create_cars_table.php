@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      * 'car_name',
@@ -20,7 +19,7 @@ return new class extends Migration
             $table->string('car_name', 50);
             $table->double('day_rate', 15, 8);
             $table->double('month_rate', 15, 8);
-            $table->string('image', 256);
+            $table->string('image', 256)->nullable();
             $table->timestamps();
         });
     }
