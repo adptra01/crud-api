@@ -25,8 +25,8 @@ class OrderFactory extends Factory
             'order_date' => $date,
             'pickup_date' => Carbon::parse($date)->addMonths(rand(1, 4))->format('Y-m-d'),
             'dropoff_date' => Carbon::parse($date)->addMonths(rand(5, 9))->format('Y-m-d'),
-            'pickup_location' => fake()->locale(),
-            'dropoff_location' => fake()->locale(),
+            'pickup_location' => fake()->city(),
+            'dropoff_location' => fake()->city(),
         ];
     }
 }

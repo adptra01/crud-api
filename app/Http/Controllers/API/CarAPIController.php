@@ -11,7 +11,18 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 /**
- * Class CarAPIController
+ * @OA\Schema(
+ *   schema="Car",
+ *   type="object",
+ *   title="Car",
+ *   description="A Car model",
+ *
+ *   @OA\Property(property="id", type="integer", example=1),
+ *   @OA\Property(property="car_name", type="string", example="Avanza"),
+ *   @OA\Property(property="day_rate", type="number", format="double", example=150.0),
+ *   @OA\Property(property="month_rate", type="number", format="double", example=3000.0),
+ *   @OA\Property(property="image", type="string", description="URL or filename of the image", example="avanza.jpg")
+ * )
  */
 class CarAPIController extends AppBaseController
 {
@@ -23,8 +34,37 @@ class CarAPIController extends AppBaseController
     }
 
     /**
-     * Display a listing of the Cars.
-     * GET|HEAD /cars
+     * @OA\Get(
+     *      path="/cars",
+     *      summary="getCarList",
+     *      tags={"Car"},
+     *      description="Get all cars",
+     *
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation",
+     *
+     *          @OA\JsonContent(
+     *              type="object",
+     *
+     *              @OA\Property(
+     *                  property="success",
+     *                  type="boolean"
+     *              ),
+     *              @OA\Property(
+     *                  property="data",
+     *                  type="array",
+     *
+     *                  @OA\Items(ref="#/components/schemas/Car")
+     *              ),
+     *
+     *              @OA\Property(
+     *                  property="message",
+     *                  type="string"
+     *              )
+     *          )
+     *      )
+     * )
      */
     public function index(Request $request): JsonResponse
     {
@@ -38,8 +78,40 @@ class CarAPIController extends AppBaseController
     }
 
     /**
-     * Store a newly created Car in storage.
-     * POST /cars
+     * @OA\Post(
+     *      path="/cars",
+     *      summary="createCar",
+     *      tags={"Car"},
+     *      description="Create Car",
+     *
+     *      @OA\RequestBody(
+     *        required=true,
+     *
+     *        @OA\JsonContent(ref="#/components/schemas/Car")
+     *      ),
+     *
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation",
+     *
+     *          @OA\JsonContent(
+     *              type="object",
+     *
+     *              @OA\Property(
+     *                  property="success",
+     *                  type="boolean"
+     *              ),
+     *              @OA\Property(
+     *                  property="data",
+     *                  ref="#/components/schemas/Car"
+     *              ),
+     *              @OA\Property(
+     *                  property="message",
+     *                  type="string"
+     *              )
+     *          )
+     *      )
+     * )
      */
     public function store(CreateCarAPIRequest $request): JsonResponse
     {
@@ -51,8 +123,45 @@ class CarAPIController extends AppBaseController
     }
 
     /**
-     * Display the specified Car.
-     * GET|HEAD /cars/{id}
+     * @OA\Get(
+     *      path="/cars/{id}",
+     *      summary="getCarItem",
+     *      tags={"Car"},
+     *      description="Get Car",
+     *
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="id of Car",
+     *
+     *           @OA\Schema(
+     *             type="integer"
+     *          ),
+     *          required=true,
+     *          in="path"
+     *      ),
+     *
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation",
+     *
+     *          @OA\JsonContent(
+     *              type="object",
+     *
+     *              @OA\Property(
+     *                  property="success",
+     *                  type="boolean"
+     *              ),
+     *              @OA\Property(
+     *                  property="data",
+     *                  ref="#/components/schemas/Car"
+     *              ),
+     *              @OA\Property(
+     *                  property="message",
+     *                  type="string"
+     *              )
+     *          )
+     *      )
+     * )
      */
     public function show($id): JsonResponse
     {
@@ -67,8 +176,51 @@ class CarAPIController extends AppBaseController
     }
 
     /**
-     * Update the specified Car in storage.
-     * PUT/PATCH /cars/{id}
+     * @OA\Put(
+     *      path="/cars/{id}",
+     *      summary="updateCar",
+     *      tags={"Car"},
+     *      description="Update Car",
+     *
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="id of Car",
+     *
+     *           @OA\Schema(
+     *             type="integer"
+     *          ),
+     *          required=true,
+     *          in="path"
+     *      ),
+     *
+     *      @OA\RequestBody(
+     *        required=true,
+     *
+     *        @OA\JsonContent(ref="#/components/schemas/Car")
+     *      ),
+     *
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation",
+     *
+     *          @OA\JsonContent(
+     *              type="object",
+     *
+     *              @OA\Property(
+     *                  property="success",
+     *                  type="boolean"
+     *              ),
+     *              @OA\Property(
+     *                  property="data",
+     *                  ref="#/components/schemas/Car"
+     *              ),
+     *              @OA\Property(
+     *                  property="message",
+     *                  type="string"
+     *              )
+     *          )
+     *      )
+     * )
      */
     public function update($id, UpdateCarAPIRequest $request): JsonResponse
     {
@@ -87,10 +239,45 @@ class CarAPIController extends AppBaseController
     }
 
     /**
-     * Remove the specified Car from storage.
-     * DELETE /cars/{id}
+     * @OA\Delete(
+     *      path="/cars/{id}",
+     *      summary="deleteCar",
+     *      tags={"Car"},
+     *      description="Delete Car",
      *
-     * @throws \Exception
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="id of Car",
+     *
+     *           @OA\Schema(
+     *             type="integer"
+     *          ),
+     *          required=true,
+     *          in="path"
+     *      ),
+     *
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation",
+     *
+     *          @OA\JsonContent(
+     *              type="object",
+     *
+     *              @OA\Property(
+     *                  property="success",
+     *                  type="boolean"
+     *              ),
+     *              @OA\Property(
+     *                  property="data",
+     *                  type="string"
+     *              ),
+     *              @OA\Property(
+     *                  property="message",
+     *                  type="string"
+     *              )
+     *          )
+     *      )
+     * )
      */
     public function destroy($id): JsonResponse
     {

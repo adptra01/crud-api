@@ -11,7 +11,20 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 /**
- * Class OrderAPIController
+ * @OA\Schema(
+ *   schema="Order",
+ *   type="object",
+ *   title="Order",
+ *   description="An Order model",
+ *
+ *   @OA\Property(property="id", type="integer", example=1),
+ *   @OA\Property(property="card_id", type="integer", example=42),
+ *   @OA\Property(property="order_date", type="string", format="date", example="2025-07-01"),
+ *   @OA\Property(property="pickup_date", type="string", format="date", example="2025-07-05"),
+ *   @OA\Property(property="dropoff_date", type="string", format="date", example="2025-07-10"),
+ *   @OA\Property(property="pickup_location", type="string", example="Jakarta Airport"),
+ *   @OA\Property(property="dropoff_location", type="string", example="Bandung Station")
+ * )
  */
 class OrderAPIController extends AppBaseController
 {
@@ -23,8 +36,31 @@ class OrderAPIController extends AppBaseController
     }
 
     /**
-     * Display a listing of the Orders.
-     * GET|HEAD /orders
+     * @OA\Get(
+     *   path="/orders",
+     *   summary="getOrderList",
+     *   tags={"Order"},
+     *   description="Get all orders",
+     *
+     *   @OA\Response(
+     *     response=200,
+     *     description="successful operation",
+     *
+     *     @OA\JsonContent(
+     *       type="object",
+     *
+     *       @OA\Property(property="success", type="boolean"),
+     *       @OA\Property(
+     *         property="data",
+     *         type="array",
+     *
+     *         @OA\Items(ref="#/components/schemas/Order")
+     *       ),
+     *
+     *       @OA\Property(property="message", type="string")
+     *     )
+     *   )
+     * )
      */
     public function index(Request $request): JsonResponse
     {
@@ -38,8 +74,31 @@ class OrderAPIController extends AppBaseController
     }
 
     /**
-     * Store a newly created Order in storage.
-     * POST /orders
+     * @OA\Post(
+     *   path="/orders",
+     *   summary="createOrder",
+     *   tags={"Order"},
+     *   description="Create Order",
+     *
+     *   @OA\RequestBody(
+     *     required=true,
+     *
+     *     @OA\JsonContent(ref="#/components/schemas/Order")
+     *   ),
+     *
+     *   @OA\Response(
+     *     response=200,
+     *     description="successful operation",
+     *
+     *     @OA\JsonContent(
+     *       type="object",
+     *
+     *       @OA\Property(property="success", type="boolean"),
+     *       @OA\Property(property="data", ref="#/components/schemas/Order"),
+     *       @OA\Property(property="message", type="string")
+     *     )
+     *   )
+     * )
      */
     public function store(CreateOrderAPIRequest $request): JsonResponse
     {
@@ -51,8 +110,29 @@ class OrderAPIController extends AppBaseController
     }
 
     /**
-     * Display the specified Order.
-     * GET|HEAD /orders/{id}
+     * @OA\Get(
+     *   path="/orders/{id}",
+     *   summary="getOrderItem",
+     *   tags={"Order"},
+     *   description="Get Order by ID",
+     *
+     *   @OA\Parameter(
+     *     name="id", in="path", required=true, @OA\Schema(type="integer")
+     *   ),
+     *
+     *   @OA\Response(
+     *     response=200,
+     *     description="successful operation",
+     *
+     *     @OA\JsonContent(
+     *       type="object",
+     *
+     *       @OA\Property(property="success", type="boolean"),
+     *       @OA\Property(property="data", ref="#/components/schemas/Order"),
+     *       @OA\Property(property="message", type="string")
+     *     )
+     *   )
+     * )
      */
     public function show($id): JsonResponse
     {
@@ -67,8 +147,35 @@ class OrderAPIController extends AppBaseController
     }
 
     /**
-     * Update the specified Order in storage.
-     * PUT/PATCH /orders/{id}
+     * @OA\Put(
+     *   path="/orders/{id}",
+     *   summary="updateOrder",
+     *   tags={"Order"},
+     *   description="Update Order",
+     *
+     *   @OA\Parameter(
+     *     name="id", in="path", required=true, @OA\Schema(type="integer")
+     *   ),
+     *
+     *   @OA\RequestBody(
+     *     required=true,
+     *
+     *     @OA\JsonContent(ref="#/components/schemas/Order")
+     *   ),
+     *
+     *   @OA\Response(
+     *     response=200,
+     *     description="successful operation",
+     *
+     *     @OA\JsonContent(
+     *       type="object",
+     *
+     *       @OA\Property(property="success", type="boolean"),
+     *       @OA\Property(property="data", ref="#/components/schemas/Order"),
+     *       @OA\Property(property="message", type="string")
+     *     )
+     *   )
+     * )
      */
     public function update($id, UpdateOrderAPIRequest $request): JsonResponse
     {
@@ -87,10 +194,29 @@ class OrderAPIController extends AppBaseController
     }
 
     /**
-     * Remove the specified Order from storage.
-     * DELETE /orders/{id}
+     * @OA\Delete(
+     *   path="/orders/{id}",
+     *   summary="deleteOrder",
+     *   tags={"Order"},
+     *   description="Delete Order",
      *
-     * @throws \Exception
+     *   @OA\Parameter(
+     *     name="id", in="path", required=true, @OA\Schema(type="integer")
+     *   ),
+     *
+     *   @OA\Response(
+     *     response=200,
+     *     description="successful operation",
+     *
+     *     @OA\JsonContent(
+     *       type="object",
+     *
+     *       @OA\Property(property="success", type="boolean"),
+     *       @OA\Property(property="data", type="string"),
+     *       @OA\Property(property="message", type="string")
+     *     )
+     *   )
+     * )
      */
     public function destroy($id): JsonResponse
     {
